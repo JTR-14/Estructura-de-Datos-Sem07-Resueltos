@@ -7,10 +7,10 @@ package Ejercicio02;
 
 public class Moderador {
     private String nombre;
-    private int nivel;
+    private String nivel;
     private boolean activo;
 
-    public Moderador(String nombre, int nivel, boolean activo) {
+    public Moderador(String nombre, String nivel, boolean activo) {
         this.nombre = nombre;
         this.nivel = nivel;
         this.activo = activo;
@@ -24,11 +24,11 @@ public class Moderador {
         this.nombre = nombre;
     }
 
-    public int getNivel() {
+    public String getNivel() {
         return nivel;
     }
 
-    public void setNivel(int nivel) {
+    public void setNivel(String nivel) {
         this.nivel = nivel;
     }
 
