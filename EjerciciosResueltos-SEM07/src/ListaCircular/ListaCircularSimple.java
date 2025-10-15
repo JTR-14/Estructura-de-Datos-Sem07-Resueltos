@@ -10,7 +10,7 @@ import javax.swing.DefaultListModel;
 public class ListaCircularSimple<T> {
     
 
-    private Nodo<T> ultimo;
+    protected Nodo<T> ultimo;
 
     public ListaCircularSimple() {
         this.ultimo = null;

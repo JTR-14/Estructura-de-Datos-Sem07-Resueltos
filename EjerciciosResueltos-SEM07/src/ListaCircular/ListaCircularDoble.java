@@ -13,7 +13,7 @@ import javax.swing.DefaultListModel;
 
 public class ListaCircularDoble<T> {
 
-    private NodoDoble<T> ultimo;
+    protected NodoDoble<T> ultimo;
 
     public ListaCircularDoble() {
         this.ultimo = null;

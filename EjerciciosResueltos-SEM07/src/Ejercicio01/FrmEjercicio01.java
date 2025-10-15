@@ -4,17 +4,20 @@
  */
 package Ejercicio01;
 
+import javax.swing.DefaultListModel;
 /**
  *
  * @author USER
  */
 public class FrmEjercicio01 extends javax.swing.JFrame {
-
+    DefaultListModel modelo = new DefaultListModel();
+    ListaCircularNumerada lista = new ListaCircularNumerada();
     /**
      * Creates new form FrmEjercicio01
      */
     public FrmEjercicio01() {
         initComponents();
+        lstNumeros.setModel(modelo);
     }
 
     /**
@@ -42,6 +45,11 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         txtNumeroPersonas.setBorder(javax.swing.BorderFactory.createTitledBorder("N° de Personas"));
+        txtNumeroPersonas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroPersonasActionPerformed(evt);
+            }
+        });
 
         btnCrear.setText("CREAR LISTA");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -73,11 +81,15 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstNumeros);
 
+        cbxK.setEnabled(false);
+
         jLabel1.setText("Seleccione K :");
 
         btnOrdenEliminacion.setText("ORDEN DE ELIMINACION");
+        btnOrdenEliminacion.setEnabled(false);
 
         btnSobreviviente.setText("ULTIMO SOBREVIVIENTE");
+        btnSobreviviente.setEnabled(false);
 
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -134,12 +146,23 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        // TODO add your handling code here:
+        int numero;
+        numero = Integer.parseInt(txtNumeroPersonas.getText());
+        lista.llenar(numero);
+        cbxK.setEnabled(true);
+        btnOrdenEliminacion.setEnabled(true);
+        btnSobreviviente.setEnabled(true);
+        
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtNumeroPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroPersonasActionPerformed
+        int numero;
+        numero =
+    }//GEN-LAST:event_txtNumeroPersonasActionPerformed
 
     /**
      * @param args the command line arguments
