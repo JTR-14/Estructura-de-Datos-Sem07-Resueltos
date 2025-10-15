@@ -5,6 +5,8 @@
 package Ejercicio01;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
@@ -34,7 +36,7 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
         btnCrear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstNumeros = new javax.swing.JList<>();
-        cbxK = new javax.swing.JComboBox<>();
+        cmbK = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         btnOrdenEliminacion = new javax.swing.JButton();
         btnSobreviviente = new javax.swing.JButton();
@@ -81,15 +83,25 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstNumeros);
 
-        cbxK.setEnabled(false);
+        cmbK.setEnabled(false);
 
         jLabel1.setText("Seleccione K :");
 
         btnOrdenEliminacion.setText("ORDEN DE ELIMINACION");
         btnOrdenEliminacion.setEnabled(false);
+        btnOrdenEliminacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenEliminacionActionPerformed(evt);
+            }
+        });
 
         btnSobreviviente.setText("ULTIMO SOBREVIVIENTE");
         btnSobreviviente.setEnabled(false);
+        btnSobreviviente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSobrevivienteActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +127,7 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbK, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnOrdenEliminacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSobreviviente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -131,7 +143,7 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addGap(29, 29, 29)
                         .addComponent(btnOrdenEliminacion)
@@ -147,12 +159,18 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         int numero;
+        if(txtNumeroPersonas.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Porfavor Ingrese un numero","ADVERTENCIA", 2);
+            return;
+        }
         numero = Integer.parseInt(txtNumeroPersonas.getText());
         lista.llenar(numero);
-        cbxK.setEnabled(true);
+        lista.mostrar(modelo);
+        cmbK.setEnabled(true);
         btnOrdenEliminacion.setEnabled(true);
         btnSobreviviente.setEnabled(true);
-        
+        txtNumeroPersonas.setText("");
+        lista.llenarComboBox(cmbK, numero);
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -160,9 +178,18 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtNumeroPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroPersonasActionPerformed
-        int numero;
-        numero =
+      
     }//GEN-LAST:event_txtNumeroPersonasActionPerformed
+
+    private void btnSobrevivienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSobrevivienteActionPerformed
+        lista.mostrarSobreviviente();
+    }//GEN-LAST:event_btnSobrevivienteActionPerformed
+
+    private void btnOrdenEliminacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenEliminacionActionPerformed
+        int k;
+        k = Integer.parseInt(cmbK.getSelectedItem().toString());
+        lista.eliminarK(k, modelo);
+    }//GEN-LAST:event_btnOrdenEliminacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,7 +201,7 @@ public class FrmEjercicio01 extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenEliminacion;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSobreviviente;
-    private javax.swing.JComboBox<String> cbxK;
+    private javax.swing.JComboBox<String> cmbK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

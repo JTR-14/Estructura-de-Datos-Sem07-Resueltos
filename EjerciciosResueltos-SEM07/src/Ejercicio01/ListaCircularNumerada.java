@@ -6,6 +6,7 @@ package Ejercicio01;
 
 import ListaCircular.*;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 public class ListaCircularNumerada extends ListaCircularSimple<Integer> {
     public void llenar(int n){
@@ -15,6 +16,12 @@ public class ListaCircularNumerada extends ListaCircularSimple<Integer> {
             for(int i = 1; i<=n; i++)
                 this.inserta(i);
             
+        }
+    }
+    public void llenarComboBox(JComboBox cmb, int n){
+        cmb.removeAllItems();
+        for(int i = 1 ; i<=n ; i++){
+            cmb.addItem(i);
         }
     }
     public void eliminarK(int k, DefaultListModel modelo){
@@ -29,7 +36,7 @@ public class ListaCircularNumerada extends ListaCircularSimple<Integer> {
                 for(int i=0; i < k-1; i++)
                     anterior = anterior.getSgte();
                 Nodo<Integer> eliminado = anterior.getSgte();
-                modelo.addElement(numeroDeOrden+". "+eliminado.getInfo());
+                modelo.addElement(numeroDeOrden+"°_    "+eliminado.getInfo());
                 numeroDeOrden++;
                 anterior.setSgte(eliminado.getSgte());
                 if(ultimo == eliminado)
