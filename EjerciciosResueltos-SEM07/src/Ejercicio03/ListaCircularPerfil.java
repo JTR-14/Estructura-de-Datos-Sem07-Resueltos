@@ -12,7 +12,8 @@ import javax.swing.table.DefaultTableModel;
  * @author USER
  */
 public class ListaCircularPerfil extends ListaCircularDoble<Perfil>{
-    
+    private NodoDoble<Perfil> nodoActual = null;
+    private int indiceActual = -1;
     public void mostrarTabla(DefaultTableModel modelo) {
         int n = contar();
         String[] titulos = {
@@ -33,5 +34,54 @@ public class ListaCircularPerfil extends ListaCircularDoble<Perfil>{
         }while(p != ultimo.getSig());
 
         modelo.setDataVector(datos, titulos);
+    }
+    public int siguiente() {
+        if (esVacia()) {
+            return -1;
+        }
+        if (nodoActual == null) {
+            nodoActual = ultimo.getSig();
+            indiceActual = 0;
+        } else {
+            nodoActual = nodoActual.getSig();
+            indiceActual++;
+            if (indiceActual >= contar()) {
+                indiceActual = 0;
+            }
+        }
+        return indiceActual;
+    }
+
+    public int anterior() {
+        if (esVacia()) {
+            return -1;
+        }
+        if (nodoActual == null) {
+            nodoActual = ultimo.getSig();
+            indiceActual = 0;
+        } else {
+            nodoActual = nodoActual.getAnt();
+            indiceActual--;
+            if (indiceActual < 0) {
+                indiceActual = contar() - 1;
+            }
+        }
+        return indiceActual;
+    }
+
+    public void reiniciarNavegacion() {
+        this.nodoActual = null;
+        this.indiceActual = -1;
+    }
+    public boolean eliminarInactivos(){
+        if (esVacia()) {
+            return false;
+        }
+
+        NodoDoble<Perfil> p = ultimo.getSig();
+        do{
+            NodoDoble<Perfil> anterior = p.getAnt();
+            NodoDoble<Perfil> siguiente = p.getSig();
+        }
     }
 }

@@ -4,6 +4,7 @@
  */
 package Ejercicio03;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 public class FrmEjercicio03 extends javax.swing.JFrame {
 
     DefaultTableModel modelo = new DefaultTableModel();
+    ListaCircularPerfil lista = new ListaCircularPerfil();
+    
     public FrmEjercicio03() {
         initComponents();
         tblPerfiles.setModel(modelo);
@@ -96,8 +99,18 @@ public class FrmEjercicio03 extends javax.swing.JFrame {
         });
 
         btnSiguiente.setText("SIGUIENTE");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         btnAnterior.setText("ANTERIOR");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
 
         btnEliminarInactivos.setText("ELIMINAR INACTIVOS");
         btnEliminarInactivos.addActionListener(new java.awt.event.ActionListener() {
@@ -194,10 +207,53 @@ public class FrmEjercicio03 extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
             System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
-
+    public void limpiar(){
+        txtUsuario.setText("");
+        txtMensajes.setText("");
+        cmbActivo.setSelectedIndex(0);
+        txtUsuario.requestFocus();
+    }
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        
+        String usuario ;
+        int nMensajes;
+        boolean estado;
+        if(txtUsuario.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese un usuario","ERROR",0);
+            return;
+        }
+        if(txtMensajes.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese N° de Mensajes","ERROR",0);
+            return;
+        }
+        if(cmbActivo.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "Ingrese el estado","ERROR",0);
+            return;
+        }
+        usuario = txtUsuario.getText();
+        nMensajes = Integer.parseInt(txtMensajes.getText());
+       estado = Boolean.parseBoolean(cmbActivo.getSelectedItem().toString());
+       Perfil nuevo = new Perfil(usuario, nMensajes, estado);
+       lista.inserta(nuevo);
+       lista.reiniciarNavegacion();
+       lista.mostrarTabla(modelo);
+       limpiar();
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        int indice = lista.siguiente();
+    if (indice != -1) {
+        tblPerfiles.setRowSelectionInterval(indice, indice);
+        tblPerfiles.scrollRectToVisible(tblPerfiles.getCellRect(indice, 0, true));
+    }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+         int indice = lista.anterior();
+    if (indice != -1) {
+        tblPerfiles.setRowSelectionInterval(indice, indice);
+        tblPerfiles.scrollRectToVisible(tblPerfiles.getCellRect(indice, 0, true));
+    }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
 
     /**
      * @param args the command line arguments
