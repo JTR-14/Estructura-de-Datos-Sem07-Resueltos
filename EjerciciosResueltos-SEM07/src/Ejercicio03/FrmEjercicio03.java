@@ -15,7 +15,7 @@ public class FrmEjercicio03 extends javax.swing.JFrame {
 
     DefaultTableModel modelo = new DefaultTableModel();
     ListaCircularPerfil lista = new ListaCircularPerfil();
-    
+
     public FrmEjercicio03() {
         initComponents();
         tblPerfiles.setModel(modelo);
@@ -201,64 +201,65 @@ public class FrmEjercicio03 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarInactivosActionPerformed
-        // TODO add your handling code here:
+        lista.eliminarInactivos();
+        lista.mostrarTabla(modelo);
+        lista.reiniciarNavegacion();
     }//GEN-LAST:event_btnEliminarInactivosActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-            System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
-    public void limpiar(){
+    public void limpiar() {
         txtUsuario.setText("");
         txtMensajes.setText("");
         cmbActivo.setSelectedIndex(0);
         txtUsuario.requestFocus();
     }
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        String usuario ;
+        String usuario;
         int nMensajes;
         boolean estado;
-        if(txtUsuario.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Ingrese un usuario","ERROR",0);
+        if (txtUsuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese un usuario", "ERROR", 0);
             return;
         }
-        if(txtMensajes.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Ingrese N° de Mensajes","ERROR",0);
+        if (txtMensajes.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese N° de Mensajes", "ERROR", 0);
             return;
         }
-        if(cmbActivo.getSelectedIndex()==0){
-            JOptionPane.showMessageDialog(null, "Ingrese el estado","ERROR",0);
+        if (cmbActivo.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Ingrese el estado", "ERROR", 0);
             return;
         }
         usuario = txtUsuario.getText();
         nMensajes = Integer.parseInt(txtMensajes.getText());
-       estado = Boolean.parseBoolean(cmbActivo.getSelectedItem().toString());
-       Perfil nuevo = new Perfil(usuario, nMensajes, estado);
-       lista.inserta(nuevo);
-       lista.reiniciarNavegacion();
-       lista.mostrarTabla(modelo);
-       limpiar();
+        estado = Boolean.parseBoolean(cmbActivo.getSelectedItem().toString());
+        Perfil nuevo = new Perfil(usuario, nMensajes, estado);
+        lista.inserta(nuevo);
+        lista.reiniciarNavegacion();
+        lista.mostrarTabla(modelo);
+        limpiar();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         int indice = lista.siguiente();
-    if (indice != -1) {
-        tblPerfiles.setRowSelectionInterval(indice, indice);
-        tblPerfiles.scrollRectToVisible(tblPerfiles.getCellRect(indice, 0, true));
-    }
+        if (indice != -1) {
+            tblPerfiles.setRowSelectionInterval(indice, indice);
+            tblPerfiles.scrollRectToVisible(tblPerfiles.getCellRect(indice, 0, true));
+        }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-         int indice = lista.anterior();
-    if (indice != -1) {
-        tblPerfiles.setRowSelectionInterval(indice, indice);
-        tblPerfiles.scrollRectToVisible(tblPerfiles.getCellRect(indice, 0, true));
-    }
+        int indice = lista.anterior();
+        if (indice != -1) {
+            tblPerfiles.setRowSelectionInterval(indice, indice);
+            tblPerfiles.scrollRectToVisible(tblPerfiles.getCellRect(indice, 0, true));
+        }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     /**
      * @param args the command line arguments
      */
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;

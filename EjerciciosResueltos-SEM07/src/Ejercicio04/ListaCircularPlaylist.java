@@ -2,34 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Ejercicio03;
+package Ejercicio04;
 
 import ListaCircular.*;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author USER
- */
-public class ListaCircularPerfil extends ListaCircularDoble<Perfil> {
 
-    private NodoDoble<Perfil> nodoActual = null;
-    private int indiceActual = -1;
-
+public class ListaCircularPlaylist extends ListaCircularDoble<PlaylistColaborativa> {
+    NodoDoble<PlaylistColaborativa> nodoActual = null;
+    int indiceActual = -1;
+    
     public void mostrarTabla(DefaultTableModel modelo) {
         int n = contar();
         String[] titulos = {
-            "USUARIO", "N° MENSAJES", "ACTIVO"
+            "ID", "CANCION", "USUARIO"
         };
         Object[][] datos = new Object[n][3];
-        NodoDoble<Perfil> p = ultimo.getSig();
+        NodoDoble<PlaylistColaborativa> p = ultimo.getSig();
         int i = 0;
 
         do {
-            Perfil mod = p.getInfo();
-            datos[i][0] = mod.getUsuario();
-            datos[i][1] = mod.getnMensajes();
-            datos[i][2] = mod.isActivo();
+            PlaylistColaborativa play = p.getInfo();
+            datos[i][0] = play.getId();
+            datos[i][1] = play.getNombreCancion();
+            datos[i][2] = play.getUsuarioCreador();
 
             p = p.getSig();
             i++;
@@ -37,8 +33,7 @@ public class ListaCircularPerfil extends ListaCircularDoble<Perfil> {
 
         modelo.setDataVector(datos, titulos);
     }
-
-    public int siguiente() {
+     public int siguiente() {
         if (esVacia()) {
             return -1;
         }
@@ -71,35 +66,38 @@ public class ListaCircularPerfil extends ListaCircularDoble<Perfil> {
         }
         return indiceActual;
     }
-
-    public void reiniciarNavegacion() {
+     public void reiniciarNavegacion() {
         this.nodoActual = null;
         this.indiceActual = -1;
     }
+     public void eliminarDuplicados() {
+    if (esVacia() || contar() <= 1) {
+        return;
+    }
 
-    public void eliminarInactivos() {
-        if (esVacia()) {
-            return;
-        }
+    NodoDoble<PlaylistColaborativa> actual = ultimo.getSig();
+    
+    for (int i = 0; i < contar(); i++) {
+        NodoDoble<PlaylistColaborativa> comparador = actual.getSig();
+        
+        while (comparador != actual) {
+            NodoDoble<PlaylistColaborativa> siguienteComparador = comparador.getSig();
 
-        int n = contar();
-        NodoDoble<Perfil> p = ultimo.getSig();
+            String nombreActual = actual.getInfo().getNombreCancion();
+            String nombreComparador = comparador.getInfo().getNombreCancion();
 
-        for (int i = 0; i < n; i++) {
-            NodoDoble<Perfil> siguiente = p.getSig();
-
-            if (!p.getInfo().isActivo()) {
-                NodoDoble<Perfil> anterior = p.getAnt();
-
-                anterior.setSig(siguiente);
-                siguiente.setAnt(anterior);
-
-                if (p == ultimo) {
+            if (nombreActual.equalsIgnoreCase(nombreComparador)) {
+                NodoDoble<PlaylistColaborativa> anterior = comparador.getAnt();
+                anterior.setSig(siguienteComparador);
+                siguienteComparador.setAnt(anterior);
+                
+                if (comparador == ultimo) {
                     ultimo = anterior;
                 }
             }
-
-            p = siguiente;
+            comparador = siguienteComparador;
         }
+        actual = actual.getSig();
     }
+}
 }
